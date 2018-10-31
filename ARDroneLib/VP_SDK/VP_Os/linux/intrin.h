@@ -66,6 +66,7 @@ static INLINE uint32_t _byteswap_ulong(uint32_t value)
 
 #else
 
+/*
 static INLINE uint32_t _byteswap_ulong(uint32_t value)
 {
   int32_t tmp;
@@ -80,6 +81,16 @@ static INLINE uint32_t _byteswap_ulong(uint32_t value)
   );
 
   return value;
+}
+*/
+
+static inline uint16_t bswap_16(uint16_t x)
+{
+    return (x >> 8) | (x << 8);
+}
+static INLINE uint32_t _byteswap_ulong(uint32_t x)
+{
+    return (bswap_16(x & 0xffff) << 16) | (bswap_16(x >> 16));
 }
 
 #endif // TARGET_OS_IPHONE
